@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_unicah" model="ir.ui.view">
+        <field name="name">sale.order.form.unicah</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="action_aplicar_convenio"
+                    string="Aplicar convenio"
+                    type="object"
+                    class="btn-secondary"
+                    invisible="state not in ('draft', 'sent') or not convenio_id"/>
+            </header>
+            <field name="partner_id" position="after">
+                <field name="tipo_cliente"/>
+                <field name="convenio_id"/>
+                <field name="convenio_aplicado"/>
+            </field>
+        </field>
+    </record>
+</odoo>
