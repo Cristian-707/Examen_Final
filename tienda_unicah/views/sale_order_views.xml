@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_order_form_unicah" model="ir.ui.view">
-        <field name="name">sale.order.form.unicah</field>
+    <record id="view_order_form_tienda_unicah" model="ir.ui.view">
+        <field name="name">sale.order.form.tienda.unicah</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
@@ -16,8 +16,36 @@
             <field name="partner_id" position="after">
                 <field name="tipo_cliente"/>
                 <field name="convenio_id"/>
+                <field name="monto_ahorro" invisible="monto_ahorro &lt;= 0"/>
                 <field name="convenio_aplicado"/>
             </field>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_tienda_unicah" model="ir.ui.view">
+        <field name="name">sale.order.list.tienda.unicah</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree"/>
+        <field name="arch" type="xml">
+            <field name="amount_total" position="before">
+                <field name="convenio_id" optional="show"/>
+                <field name="monto_ahorro" sum="Total ahorro" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter_tienda_unicah" model="ir.ui.view">
+        <field name="name">sale.order.search.tienda.unicah</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+        <field name="arch" type="xml">
+            <search position="inside">
+                <field name="convenio_id"/>
+                <separator/>
+                <filter string="Con convenio" name="con_convenio" domain="[('convenio_id', '!=', False)]"/>
+                <separator/>
+                <filter string="Convenio" name="group_by_convenio" context="{'group_by': 'convenio_id'}"/>
+            </search>
         </field>
     </record>
 </odoo>
